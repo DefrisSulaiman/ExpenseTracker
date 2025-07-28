@@ -22,6 +22,11 @@ export const CATEGORIES = [
 
 const STORAGE_KEY = 'expense-tracker-data';
 
+// 🔠 Fungsi untuk kapitalisasi kata pertama
+const capitalizeFirstLetter = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
 export const useExpenses = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
 
@@ -40,13 +45,13 @@ export const useExpenses = () => {
   const addExpense = (name: string, category: string, amount: number) => {
     const newExpense: Expense = {
       id: Date.now().toString(),
-      name,
+      name: capitalizeFirstLetter(name.trim()), // 🔥 Modifikasi nama di sini
       category,
       amount,
       date: new Date().toISOString().split('T')[0],
       timestamp: Date.now()
     };
-    
+
     const updatedExpenses = [newExpense, ...expenses];
     saveExpenses(updatedExpenses);
   };
